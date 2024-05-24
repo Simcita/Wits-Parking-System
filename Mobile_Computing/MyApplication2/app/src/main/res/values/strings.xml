@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="my_map_api_key">AIzaSyA1W3TYx-JMndWUnm2mlpv11qYuJ-2AGmY</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="title_activity_selection">Selection</string>
+
+</resources>
