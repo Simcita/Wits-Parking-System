@@ -1,23 +1,27 @@
 package com.example.just;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
+import com.google.gson.JsonObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText editTextUsername;
-    private EditText editTextPassword;
-    private Button buttonRegister;
+    private EditText editTextUsername, editTextPassword;
+    private Button buttonSign;
+    private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,67 +30,70 @@ public class MainActivity extends AppCompatActivity {
 
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextPassword = findViewById(R.id.editTextPassword);
-        buttonRegister = findViewById(R.id.buttonRegister);
-        String[] arr = new String[2];
+        buttonSign = findViewById(R.id.buttonRegister);
 
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://lamp.ms.wits.ac.za/home/s2688313/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        apiService = retrofit.create(ApiService.class);
+
+        buttonSign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = editTextUsername.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
-                arr[0] = username;
-                arr[1] = password;
-                if (!username.isEmpty() && !password.isEmpty()) {
-                    new RegisterUser().execute(username, password);
+
+                if (TextUtils.isEmpty(username)) {
+                    showError("Please provide a username");
+                } else if (!isValidPassword(password)) {
+                    showError("Password must be at least 6 characters");
                 } else {
-                    Toast.makeText(MainActivity.this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
+                    signUp(username, password);
                 }
             }
         });
     }
 
-    private class RegisterUser extends AsyncTask<String, Void, String> {
+    private void showError(String message) {
+        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
 
-        @Override
-        protected String doInBackground(String... params) {
-            String username = params[0];
-            String password = params[1];
+    private boolean isValidPassword(String password) {
+        return password.length() >= 6;
+    }
 
-            try {
-                URL url = new URL("https://lamp.ms.wits.ac.za/home/s2688313/register_user.php");
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-
-                String data = "username=" + username + "&password=" + password;
-
-                OutputStream os = httpURLConnection.getOutputStream();
-                os.write(data.getBytes());
-                os.flush();
-                os.close();
-
-                BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-                String response;
-                StringBuilder sb = new StringBuilder();
-                while ((response = br.readLine()) != null) {
-                    sb.append(response);
+    private void signUp(String username, String password) {
+        Call<JsonObject> call = apiService.signUp(username, password);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    JsonObject responseObject = response.body();
+                    if (responseObject != null && responseObject.has("success")) {
+                        boolean success = responseObject.get("success").getAsBoolean();
+                        if (success) {
+                            Toast.makeText(MainActivity.this, "Sign-up successful", Toast.LENGTH_SHORT).show();
+                        } else {
+                            String errorMessage = "Sign-up failed";
+                            if (responseObject.has("message")) {
+                                errorMessage += ": " + responseObject.get("message").getAsString();
+                            }
+                            showError(errorMessage);
+                        }
+                    } else {
+                        showError("Unexpected response from server");
+                    }
+                } else {
+                    showError("Server error. Please try again later.");
                 }
-                br.close();
-                return sb.toString();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
             }
-        }
 
-        @Override
-        protected void onPostExecute(String result) {
-            if (result != null) {
-                Toast.makeText(MainActivity.this, result, Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(MainActivity.this, "Error registering user", Toast.LENGTH_LONG).show();
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                showError("Network error. Please try again later.");
             }
-        }
+        });
     }
 }
