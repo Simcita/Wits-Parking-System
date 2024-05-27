@@ -10,15 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/my_primary"
-        android:alpha="0.8" />
-
+        android:alpha="0.8" >
 
         <LinearLayout
             android:id="@+id/spot_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
 
             <ImageView
@@ -28,6 +27,7 @@
                 android:src="@drawable/car_24" />
 
         </LinearLayout>
+    </RelativeLayout>
 
 
 </RelativeLayout>

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -63,14 +64,24 @@ public class FindTheSpot extends AppCompatActivity {
 
                 JSONObject item = all.getJSONObject(0);
                 String name = item.getString("SPOT_ID");
+                String nme = "Get Directions";
 
                 Button t = new Button(FindTheSpot.this);
                 t.setWidth(20);
                 t.setHeight(150);
                 t.setTextSize(20);
-                t.setText(name);
+                t.setText(nme);
 
                 mainLayout.addView(t);
+
+                t.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(FindTheSpot.this, GoogleMaps.class);
+                        startActivity(intent);
+                        //setContentView(R.layout.maps);
+                    }
+                });
             } else {
                 Toast.makeText(FindTheSpot.this, "Sorry, there are no parking lots available for parking.", Toast.LENGTH_SHORT).show();
             }

@@ -50,12 +50,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class GoogleMaps {
-
-
-
-
-    public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+    public class GoogleMaps extends AppCompatActivity implements OnMapReadyCallback {
 
         private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
         private GoogleMap mMap;
@@ -70,7 +65,7 @@ public class GoogleMaps {
             mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
             if (mapFragment != null) {
-                mapFragment.getMapAsync(this);
+                mapFragment.getMapAsync((OnMapReadyCallback) this);
             }
 
             editTextSource = findViewById(R.id.source);
@@ -81,7 +76,7 @@ public class GoogleMaps {
                 public void onClick(View v) {
                     String source = editTextSource.getText().toString();
                     String destination = editTextDestination.getText().toString();
-                    if (source.equals("") || destination.equals("")) {
+                    if (source.isEmpty() || destination.isEmpty()) {
                         Toast.makeText(getApplicationContext(), "Enter both source and destination", Toast.LENGTH_SHORT).show();
                     } else if (destination.equals("Mens res")) {
                         destination = processJSON(editTextDestination.getText().toString());
@@ -177,4 +172,4 @@ public class GoogleMaps {
             }
         }
     }
-}
+
