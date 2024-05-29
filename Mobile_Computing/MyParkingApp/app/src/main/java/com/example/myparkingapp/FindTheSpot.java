@@ -37,6 +37,8 @@ public class FindTheSpot extends AppCompatActivity {
         mainLayout.setOrientation(LinearLayout.VERTICAL);
 
 
+
+
         post("https://lamp.ms.wits.ac.za/home/s2729931/Parking_Lot.php", "", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -78,6 +80,10 @@ public class FindTheSpot extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(FindTheSpot.this, GoogleMaps.class);
+
+                        Intent intent2 = getIntent();
+                        String importantText = intent2.getStringExtra("IMPORTANT_TEXT");
+                        intent.putExtra("IMPORTANT_TEXT", importantText);
                         startActivity(intent);
                         //setContentView(R.layout.maps);
                     }
