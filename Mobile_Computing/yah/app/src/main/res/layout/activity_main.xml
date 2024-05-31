@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="Choose Your Parking Spot" />
+
+        <EditText
+            android:id="@+id/startTimeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="Select Start Time"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/endTimeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="Select End Time"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/spotIdEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Enter Spot ID"
+            android:minHeight="48dp" />
+
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Reserve Parking" />
+    </LinearLayout>
+
+</RelativeLayout>
