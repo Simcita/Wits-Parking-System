@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/my_primary"
+        android:alpha="0.8" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:id="@+id/main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You're one step closer to finding your parking spot."
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/first_year"
+                android:layout_width="300dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/white"
+                android:text="FIRST YEARS PARKING"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/second_year"
+                android:layout_width="300dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/white"
+                android:text="2nd+ YEAR PARKING"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/third_year"
+                android:layout_width="300dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/white"
+                android:text="3rd+ YEAR PARKING"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/staff"
+                android:layout_width="300dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/white"
+
+                android:text="Staff Wits PARKING"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/car_24" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
